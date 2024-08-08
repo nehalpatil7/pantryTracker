@@ -1,5 +1,4 @@
 'use client'
-import Image from "next/image";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import {
   CssBaseline,
@@ -28,6 +27,7 @@ import { firestore } from "../firebase";
 import { collection, deleteDoc, doc, getDoc, getDocs, query, setDoc } from "firebase/firestore";
 import CameraComponent from "./cameraComponent";
 import RecipeSuggestion from "./recipeSuggestion";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 
 export default function Home() {
@@ -160,6 +160,7 @@ export default function Home() {
           <Typography variant="h2" color="text.primary" pl={3}>Manage your Stuff!</Typography>
           <IconButton onClick={toggleDarkMode}>
             {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+            <SpeedInsights />
           </IconButton>
         </Box>
 

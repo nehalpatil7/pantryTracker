@@ -74,16 +74,18 @@ const RecipeSuggestion = ({ open, onClose, inventoryItems }) => {
 
     return (
         <Box open={open} onClose={onClose} maxWidth="md" fullwidth="true">
-            <Typography variant="h6" gutterBottom padding={2}>
-                Available Ingredients:
-            </Typography>
-            <List dense>
-                {inventoryItems.map((item) => (
-                    <ListItem key={item}>
-                        <ListItemText primary={item} />
-                    </ListItem>
-                ))}
-            </List>
+            <Box display="flex" flexDirection="column" alignItems="left" padding={2}>
+                <Typography variant="h6" gutterBottom>
+                    Available Ingredients:
+                </Typography>
+                <Typography
+                    variant="overline"
+                    color="textSecondary"
+                    sx={{ marginLeft: 2, display: 'inline', fontSize: '0.875rem', fontFamily: 'Arial' }}
+                >
+                    {inventoryItems.join(', ')}
+                </Typography>
+            </Box>
             {loading ? (
                 <CircularProgress />
             ) : error ? (

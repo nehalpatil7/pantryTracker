@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This project is an AI-powered Inventory Management System specifically designed for food items, developed as part of the Headstarter AI Fellowship. It features real-time inventory tracking, AI-powered image recognition for adding items, and smart recipe suggestions based on available ingredients.
+This project is an AI-powered Inventory Management System works best with food items, developed as part of the Headstarter AI Fellowship. It features real-time inventory tracking, AI-powered image recognition for adding items, and smart recipe suggestions based on available ingredients.
 
 ![Dashboard Screenshot](pantry_tracker_homepage.png)
 

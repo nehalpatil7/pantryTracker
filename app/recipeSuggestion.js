@@ -115,7 +115,7 @@ const RecipeSuggestion = ({ open, onClose, inventoryItems }) => {
                     </List>
                 </>
             ) : (
-                <Typography padding={2}>Click "Get Recipe Suggestion" to generate a recipe.</Typography>
+                <Typography padding={2}>Click &apos;Get Recipe Suggestion&apos; to generate a recipe.</Typography>
             )}
             <DialogActions>
                 <Button onClick={getRecipeSuggestion} color="primary" disabled={loading}>

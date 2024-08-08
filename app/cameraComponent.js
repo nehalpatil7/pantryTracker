@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { NextResponse } from 'next/server';
 import { Camera } from 'react-camera-pro';
-import { Button, Box, Typography, TextField } from '@mui/material';
+import { Button, Box, Typography } from '@mui/material';
+import Image from 'next/image';
 import { storage } from "../firebase";
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import openai from "./openaiSetup";
@@ -106,7 +107,7 @@ const CameraComponent = ({ onDetection, inventoryItems }) => {
             </Button>
             {image && (
                 <Box mt={2}>
-                    <img src={image} alt="Captured" style={{ maxWidth: '100%' }} />
+                    <Image src={image} alt="Captured" style={{ maxWidth: '100%' }} />
                 </Box>
             )}
             {error && (

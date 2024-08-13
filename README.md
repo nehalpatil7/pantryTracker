@@ -51,19 +51,19 @@ npm install
 ```
 
 4. Set up environment variables:
-Create a `.env` file in the root directory of your project & add the following environment variables:
+Create a `.env.local` file in the root directory of your project & add the following environment variables:
 
 ```bash
 NEXT_PUBLIC_OPENROUTER_ENDPOINT=your_openrouter_endpoint
-NEXT_PUBLIC_OPENROUTER_API_KEY=your_openrouter_api_key
+OPENROUTER_API_KEY=your_openrouter_api_key
 
-NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
+FIREBASE_API_KEY=your_firebase_api_key
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
 NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_firebase_project_id
 NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET_NAME=your_firebase_storage_bucket
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
-NEXT_PUBLIC_FIREBASE_APP_ID=your_firebase_app_id
-NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=your_firebase_measurement_id
+FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
+FIREBASE_APP_ID=your_firebase_app_id
+FIREBASE_MEASUREMENT_ID=your_firebase_measurement_id
 ```
 
 
@@ -113,7 +113,7 @@ npm run build
 
 ## 👤 Author
 
-**Nishar Miya**
+**Nehal Patil**
 
 - LinkedIn: [Nehal Patil](https://www.linkedin.com/in/nehalpatil7/)
 - GitHub: [@nehalpatil7](https://github.com/nehalpatil7)

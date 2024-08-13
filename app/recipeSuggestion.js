@@ -10,7 +10,6 @@ import {
     CircularProgress,
     Alert,
 } from '@mui/material';
-import openai from "./openaiSetup";
 
 
 const RecipeSuggestion = ({ open, onClose, inventoryItems }) => {
@@ -22,23 +21,24 @@ const RecipeSuggestion = ({ open, onClose, inventoryItems }) => {
         setLoading(true);
         setError(null);
         try {
-            if (!process.env.NEXT_PUBLIC_OPENROUTER_API_KEY) {
-                return NextResponse.json({ error: 'OpenAI API key is not set' }, { status: 500 });
+            const response = await fetch('/api/recipe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    inventory: inventoryItems
+                }),
+            })
+            if (!response.ok) {
+                throw new Error('Failed to fetch recipe from API');
             }
-            const completion = await openai.chat.completions.create({
-                model: "openai/gpt-4o-mini",
-                messages: [
-                    {
-                        role: "system",
-                        content: "You are a helpful assistant that suggests recipes based on available food ingredients. NOTE: Do not give any helper statements or any text formatting, give me only the content needed."
-                    },
-                    {
-                        role: "user",
-                        content: `Some of the following items are food items, ${inventoryItems.join(', ')}. Filter them and suggest a recipe using some or all of those ingredients. Provide the recipe name, ingredients list, and step-by-step instructions.`
-                    }
-                ],
-            });
-            return completion?.choices[0]?.message?.content;
+            const data = await response.text();
+            if (data) {
+                return data;
+            } else {
+                return null;
+            }
         } catch (error) {
             console.error('Error getting recipe from AI: ', error);
             setError('Failed to get recipe. Please try again.');
@@ -51,6 +51,7 @@ const RecipeSuggestion = ({ open, onClose, inventoryItems }) => {
         setError(null);
         try {
             const recipeText = await aiRecipeGenerator();
+            console.log("recipeText ", recipeText);
             if (!recipeText) {
                 console.error('Error generating recipe');
                 throw new Error('API error!');
@@ -66,7 +67,7 @@ const RecipeSuggestion = ({ open, onClose, inventoryItems }) => {
             }
         } catch (error) {
             console.error('Error generating recipe: ', error);
-            setError('An error occurred while generating/extarcting the recipe.');
+            setError('An error occurred while generating/extracting the recipe.');
         } finally {
             setLoading(false);
         }

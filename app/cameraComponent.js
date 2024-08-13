@@ -5,36 +5,35 @@ import { Button, Box, Typography } from '@mui/material';
 import Image from 'next/image';
 import { storage } from "../firebase";
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
-import openai from "./openaiSetup";
 
 
 const CameraComponent = ({ onDetection, inventoryItems }) => {
     const camera = useRef(null);
-    const [image, setImage] = useState(null);
+    // const [image, setImage] = useState(null);
     const [detecting, setDetecting] = useState(false);
     const [error, setError] = useState(null);
 
     const classifyImage = async (imageUrl) => {
         try {
-            if (!process.env.NEXT_PUBLIC_OPENROUTER_API_KEY) {
-                return NextResponse.json({ error: 'OpenAI API key is not set' }, { status: 500 });
+            const response = await fetch('/api/camera', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    inventory: inventoryItems,
+                    img: imageUrl
+                }),
+            })
+            if (!response.ok) {
+                throw new Error('Failed to fetch recipe from API');
             }
-            const completion = await openai.chat.completions.create({
-                model: "openai/gpt-4o-mini",
-                messages: [
-                    {
-                        role: "user",
-                        content: [
-                            { type: "text", text: `In this image which fruit, vegetable or a food item(basically any edible thing, may it be a packaged item) am I holding in the hand? If it's one of these items: ${inventoryItems.join(', ')}, respond with that item name case sensitively. If it's a fruit or vegetable not in the list, respond with the name of the fruit or vegetable. If it's not a fruit or vegetable, respond with none` },
-                            {
-                                type: "image_url",
-                                image_url: { url: imageUrl },
-                            },
-                        ],
-                    },
-                ],
-            });
-            return completion?.choices[0]?.message?.content;
+            const data = await response.text();
+            if (data) {
+                return data;
+            } else {
+                return null;
+            }
         } catch (error) {
             console.error('Error classifying image:', error);
             setError('Failed to classify image. Please try again.');
@@ -65,7 +64,6 @@ const CameraComponent = ({ onDetection, inventoryItems }) => {
     const captureImage = async () => {
         setError(null);
         const imageSrc = camera.current.takePhoto();
-        setImage(imageSrc);
         setDetecting(true);
 
         try {
@@ -77,7 +75,7 @@ const CameraComponent = ({ onDetection, inventoryItems }) => {
 
             await deleteImageFromStorage(ref);
 
-            if (detectedObject.toLowerCase() === 'none') {
+            if (detectedObject.toLowerCase().includes('none')) {
                 setError('No food item detected. Please try again or enter the name manually.');
             } else {
                 onDetection(detectedObject);
@@ -105,11 +103,6 @@ const CameraComponent = ({ onDetection, inventoryItems }) => {
             >
                 {detecting ? 'Detecting...' : 'Capture and Detect'}
             </Button>
-            {image && (
-                <Box mt={2}>
-                    <Image src={image} alt="Captured" style={{ maxWidth: '100%' }} />
-                </Box>
-            )}
             {error && (
                 <Typography color="error" mt={2}>
                     {error}

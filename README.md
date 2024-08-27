@@ -26,7 +26,7 @@ This project is an AI-powered Inventory Management System works best with food i
 
 ## 🚀 Live Demo
 
-Check out the live demo deployed on Vercel: [\[Click Here!\]](https://inventory-management-ochre.vercel.app/)
+Check out the video demo on YouTube: [\[Click Here!\]](https://www.youtube.com/watch?v=jIDng3ZgTq8)
 
 ## 🏁 Getting Started
 

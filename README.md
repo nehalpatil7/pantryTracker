@@ -16,7 +16,9 @@ This project is an AI-powered Inventory Management System works best with food i
 - Responsive design for various screen sizes
 
 ## 🛠️ Technologies Used
-
+<p align="center">
+    <img src="https://skillicons.dev/icons?i=git,ai,js,nextjs,react,html,tailwind,materialui,firebase" />
+</p>
 - [Next.js](https://nextjs.org/)
 - [React](https://reactjs.org/)
 - [Firebase](https://firebase.google.com/)
